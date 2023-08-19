@@ -2,8 +2,12 @@ import { StyleSheet, View } from 'react-native'
 import React from 'react'
 
 function Card({ children, style = {} }) {
+  const additionalStyles = 
+    Array.isArray(style)
+    ? [styles.cardContainer, ...style]
+    : [styles.cardContainer, style];
   return (
-    <View style={[styles.cardContainer, style]}>
+    <View style={additionalStyles}>
       {children}
     </View>
   );

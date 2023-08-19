@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-function GuessNumber() {
+function GuessNumber({ gameMode, currentScreen, guesser, noOfGuesses, guessNumber }) {
   return (
     <View>
-      <Text>GuessNumber</Text>
+      <Text>{gameMode}, {currentScreen}, {guesser}, {noOfGuesses}, {guessNumber}</Text>
     </View>
   )
 }

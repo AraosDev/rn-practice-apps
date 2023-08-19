@@ -4,13 +4,15 @@ import GameMode from './screens/GameMode'
 import GameConfig from './screens/GameConfig';
 import SetNumber from './screens/SetNumber';
 import GameOver from './screens/GameOver';
+import GuessNumber from './screens/GuessNumber';
 
-export default function GuessNumber() {
+function GuessNumberGame() {
   let screenComponent = <GameMode />;
   const [gameMode, setGameMode] = useState();
   const [currentScreen, setcurrentScreen] = useState('GAME_MODE');
   const [guesser, setGuesser] = useState('Player 1');
   const [noOfGuesses, setNoOfGuesses] = useState('1');
+  const [guessNumber, setGuessNumber] = useState('1');
 
   const changeScreen = (screen) => {
     setcurrentScreen(screen);
@@ -38,15 +40,23 @@ export default function GuessNumber() {
     case 'SET_NUMBER':
       screenComponent = (
         <SetNumber
-          gameMode={gameMode}
-          currentScreen={currentScreen}
           guesser={guesser}
-          noOfGuesses={noOfGuesses}
+          guessNumber={guessNumber}
+          setGuessNumber={setGuessNumber}
+          navigateTo={changeScreen} 
         />
       );
       break;
     case 'GUESS_NUMBER':
-      screenComponent = <GuessNumber />;
+      screenComponent = (
+        <GuessNumber
+          gameMode={gameMode}
+          currentScreen={currentScreen}
+          guesser={guesser}
+          noOfGuesses={noOfGuesses}
+          guessNumber={guessNumber}
+        />
+      );
       break;
     case 'GAME_CONFIG':
       screenComponent = <GameOver />;
@@ -63,6 +73,8 @@ export default function GuessNumber() {
     </View>
   )
 }
+
+export default GuessNumberGame;
 
 const styles = StyleSheet.create({
     rootScreen: {
