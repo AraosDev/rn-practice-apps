@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Card from '../../Globals/components/Card';
 import NumberInput from '../../Globals/components/NumberInput';
@@ -12,7 +12,9 @@ function SetNumber({ guesser, guessNumber, setGuessNumber, navigateTo }) {
   };
 
   const onSubmit = () => {
-    navigateTo('GUESS_NUMBER');
+    if (Number(guessNumber) < 1 || Number(guessNumber) > 99)
+      Alert.alert('In valid guess number', 'Number should be between 1 and 99');
+    else navigateTo('GUESS_NUMBER');
   };
 
   return (
