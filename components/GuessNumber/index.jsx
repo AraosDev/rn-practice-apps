@@ -13,6 +13,7 @@ function GuessNumberGame() {
   const [guesser, setGuesser] = useState('Player 1');
   const [noOfGuesses, setNoOfGuesses] = useState('1');
   const [guessNumber, setGuessNumber] = useState('1');
+  const [winner, setWinner] = useState('');
 
   const changeScreen = (screen) => {
     setcurrentScreen(screen);
@@ -55,12 +56,19 @@ function GuessNumberGame() {
           guesser={guesser}
           noOfGuesses={noOfGuesses}
           guessNumber={guessNumber}
+          setWinner={setWinner}
+          setcurrentScreen={setcurrentScreen}
         />
       );
       break;
-    case 'GAME_CONFIG':
-      screenComponent = <GameOver />;
+    case 'GAME_OVER':
+      screenComponent = (
+        <GameOver
+          winner={winner}  
+        />
+      );
       break;
+    
     case 'GAME_MODE':
     default:
       screenComponent = <GameMode onChangeMode={changeGameModeHandler} />;

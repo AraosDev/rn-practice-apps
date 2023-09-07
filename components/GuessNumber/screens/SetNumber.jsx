@@ -20,10 +20,10 @@ function SetNumber({ guesser, guessNumber, setGuessNumber, navigateTo }) {
   return (
     <View style={styles.rootScreen}>
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Hi {guesser}</Text>
+        <Text style={styles.titleText}>Hi {opponent}</Text>
       </View>
       <View style={styles.instructionContainer}>
-        <Text style={styles.instructionText}>Set the number to be guessed by {opponent}</Text>
+        <Text style={styles.instructionText}>Set the number to be guessed by {guesser}</Text>
       </View>
       <View style={styles.guessNumberInputContainer}>
         <Card style={[styles.rootScreen, styles.cardContainer]}>

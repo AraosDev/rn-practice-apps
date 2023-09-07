@@ -6,9 +6,9 @@ function NumberInput({ value, onChangeValue, defaultValue = '0' }) {
 
     const onChangeText = (currentValue, flag = '') => {
         const currentNumber = Number(currentValue || defaultValue);
-        const finalValue = 
-            flag === 'ADD_NUM' 
-            ? currentNumber + 1 : flag === 'SUB_NUM' 
+        const finalValue =
+            flag === 'ADD_NUM'
+            ? currentNumber + 1 : flag === 'SUB_NUM'
             ? currentNumber - (currentNumber === Number(defaultValue) ? 0 : 1) : currentNumber;
         onChangeValue(finalValue);
     };
