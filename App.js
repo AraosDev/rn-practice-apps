@@ -1,13 +1,14 @@
 import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import GuessNumber from './components/GuessNumber';
+import MealsApp from './components/MealsApp';
+import 'react-native-gesture-handler'
 
 export default function App() {
   return (
     <>
       <StatusBar style='auto' />
       <View style={styles.container}>
-        <GuessNumber />
+        <MealsApp />
       </View>
     </>
   );
@@ -16,7 +17,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 16,
+    // paddingTop: 50,
+    // paddingHorizontal: 16,
   }
 });
