@@ -6,6 +6,7 @@ import GoalsManager from './components/GoalsManager';
 import GuessNumberGame from './components/GuessNumber';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import ExpenseTracker from './components/ExpenseTracker';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,6 +16,7 @@ function RNPractiseApps() {
       <Drawer.Screen name='mealsApp' component={MealsApp} options={{ headerShown: false, title: 'Meals App' }} />
       <Drawer.Screen name='goalsManager' component={GoalsManager} options={{ title: 'Goals Manager' }} />
       <Drawer.Screen name='guessNumberGame' component={GuessNumberGame} options={{ title: 'Guess Number Game' }} />
+      <Drawer.Screen name='expenseTracker' component={ExpenseTracker} options={{ title: 'Expense Tracker', headerShown: false }} />
     </Drawer.Navigator>
   );
 }
