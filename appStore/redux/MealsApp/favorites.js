@@ -4,7 +4,7 @@ const initialState = {
     favIds: [],
 };
 
-const favoritesSlice = createSlice({
+const mealsAppFavoritesSlice = createSlice({
     name: 'favorites',
     initialState,
     reducers: {
@@ -20,6 +20,6 @@ const favoritesSlice = createSlice({
     }
 });
 
-export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+export const { addFavorite, removeFavorite } = mealsAppFavoritesSlice.actions;
 
-export default favoritesSlice.reducer;
+export default mealsAppFavoritesSlice.reducer;

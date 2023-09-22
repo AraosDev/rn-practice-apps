@@ -7,7 +7,8 @@ import GuessNumberGame from './components/GuessNumber';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import ExpenseTracker from './components/ExpenseTracker';
-
+import { store } from './appStore/redux/store';
+import { Provider } from 'react-redux';
 const Drawer = createDrawerNavigator();
 
 function RNPractiseApps() {
@@ -26,9 +27,11 @@ export default function App() {
     <>
       <StatusBar style='auto' />
       <View style={styles.container}>
+      <Provider store={store}>
         <NavigationContainer>
           <RNPractiseApps />
         </NavigationContainer>
+      </Provider>
       </View>
     </>
   );
