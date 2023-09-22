@@ -1,93 +1,16 @@
-import { View, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, StyleSheet } from 'react-native';
+import React/* , { useContext } */ from 'react';
 import { colors } from '../../Globals/Styles/colors';
 import ExpenseOutput from '../components/ExpenseOutput';
-
-export const dummyExpenses = [
-    {
-        id: 'e1',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e2',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e3',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e4',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e5',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e6',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e7',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e8',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e9',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e10',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e11',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e12',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-    {
-        id: 'e13',
-        amount: 100,
-        description: 'Cups',
-        date: new Date('1997-11-13')
-    },
-];
+// import { ExpenseCtx } from '../../../appStore/context/ExpenseTracker/expenses';
+import { useSelector } from 'react-redux';
 
 function AllExpenses() {
+    // const { expenses } = useContext(ExpenseCtx);
+    const { expenses } = useSelector((state) => state.expenses)
   return (
     <View style={styles.rootScreen}>
-      <ExpenseOutput expenses={dummyExpenses} period='All Expenditures' />
+      <ExpenseOutput expenses={expenses} period='All Expenditures' />
     </View>
   );
 }

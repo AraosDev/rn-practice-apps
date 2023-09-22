@@ -1,11 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text } from 'react-native'
 import React from 'react'
 
-export default function Button({ children, onPress }) {
+export default function Button({ children, onPress, style = {}, rippleColor = '' }) {
   return (
     <Pressable 
-      style={styles.buttonContainer} 
-      android_ripple={{ color: '#d4b6df' }}
+      style={[styles.buttonContainer, style]}
+      android_ripple={{ color: rippleColor || '#d4b6df' }}
       onPress={onPress}
     >
       <Text style={styles.buttonText}>{children}</Text>

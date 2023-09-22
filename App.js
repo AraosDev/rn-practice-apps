@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import ExpenseTracker from './components/ExpenseTracker';
 import { store } from './appStore/redux/store';
 import { Provider } from 'react-redux';
+import { ExpenseProvider } from './appStore/context/ExpenseTracker/expenses';
 const Drawer = createDrawerNavigator();
 
 function RNPractiseApps() {
@@ -28,9 +29,11 @@ export default function App() {
       <StatusBar style='auto' />
       <View style={styles.container}>
       <Provider store={store}>
-        <NavigationContainer>
-          <RNPractiseApps />
-        </NavigationContainer>
+        <ExpenseProvider>
+          <NavigationContainer>
+            <RNPractiseApps />
+          </NavigationContainer>
+        </ExpenseProvider>
       </Provider>
       </View>
     </>

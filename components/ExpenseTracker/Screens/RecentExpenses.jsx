@@ -1,13 +1,16 @@
-import { View, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, StyleSheet } from 'react-native';
+import React/* , { useContext } */ from 'react';
 import { colors } from '../../Globals/Styles/colors';
-import { dummyExpenses } from './AllExpenses';
 import ExpenseOutput from '../components/ExpenseOutput';
+// import { ExpenseCtx } from '../../../appStore/context/ExpenseTracker/expenses';
+import { useSelector } from 'react-redux';
 
 function RecentExpenses() {
+    // const { expenses } = useContext(ExpenseCtx);
+    const { expenses } = useSelector((state) => state.expenses);
     return (
         <View style={styles.rootScreen}>
-            <ExpenseOutput expenses={dummyExpenses} period='Last 7 days' />
+            <ExpenseOutput expenses={expenses} period='Last 7 days' />
         </View>
     );
 }
