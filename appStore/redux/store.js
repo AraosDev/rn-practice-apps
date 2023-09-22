@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import favorites from "./favorites";
+import mealsAppFavoritesSlice from "./MealsApp/favorites";
 
 export const store = configureStore({
     reducer: {
-        favorites,
+        mealsAppFavoritesSlice,
     },
 });

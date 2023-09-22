@@ -1,17 +1,15 @@
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
-import React, { /* useContext, */ useLayoutEffect } from 'react'
+import React, { useLayoutEffect } from 'react'
 import { MEALS } from '../data/dummy-data';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Chip from '../../Globals/components/Chip';
 import IconButton from '../../Globals/components/IconButton';
-// import { FavoritesCtx } from '../store/context/favorites';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFavorite, removeFavorite } from '../store/redux/favorites';
+import { addFavorite, removeFavorite } from '../../../appStore/redux/MealsApp/favorites';
 
 function MealDetails({ navigation, route }) {
-    // const favMealsCtx = useContext(FavoritesCtx);
     const dispatch = useDispatch();
-    const { favIds } = useSelector((state) => state.favorites);
+    const { favIds } = useSelector((state) => state.mealsAppFavoritesSlice);
     const mealTitle = route.params.title;
     const { 
         imageUrl,
@@ -25,11 +23,11 @@ function MealDetails({ navigation, route }) {
         steps,
         id
     } = MEALS.find(({title}) => title === mealTitle) || {};
-    const isFavorite = favIds.includes(id); // favMealsCtx.isFavorite(id);
+    const isFavorite = favIds.includes(id);
 
     const handleFavStateToggle = () => {
-        if (isFavorite) dispatch(removeFavorite({ id })); // favMealsCtx.removeFavorite(id);
-        else dispatch(addFavorite({ id })); // favMealsCtx.addFavorite(id);
+        if (isFavorite) dispatch(removeFavorite({ id }));
+        else dispatch(addFavorite({ id }));
     };
 
     useLayoutEffect(() => {
