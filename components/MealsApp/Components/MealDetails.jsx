@@ -9,7 +9,7 @@ import { addFavorite, removeFavorite } from '../../../appStore/redux/MealsApp/fa
 
 function MealDetails({ navigation, route }) {
     const dispatch = useDispatch();
-    const { favIds } = useSelector((state) => state.mealsAppFavoritesSlice);
+    const { favIds } = useSelector((state) => state.mealsFavorites);
     const mealTitle = route.params.title;
     const { 
         imageUrl,

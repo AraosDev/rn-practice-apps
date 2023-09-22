@@ -1,16 +1,18 @@
-import { View, StyleSheet } from 'react-native'
-import React, { useContext } from 'react'
+import { View, StyleSheet } from 'react-native';
+import React/* , { useContext } */ from 'react';
 import { colors } from '../../Globals/Styles/colors';
 import Button from '../../Globals/components/Button';
-import { ExpenseCtx } from '../../../appStore/context/ExpenseTracker/expenses';
+// import { ExpenseCtx } from '../../../appStore/context/ExpenseTracker/expenses';
 import IconButton from '../../Globals/components/IconButton';
+import { useDispatch } from 'react-redux';
+import { addExpense, deleteExpense, updateExpense } from '../../../appStore/redux/ExpenseTracker/expenses';
 
 function ManageExpenses({ route, navigation }) {
   const { expenseId } = route.params || {};
   const isUpdateScreen = !!expenseId;
 
-  const expenseCtx = useContext(ExpenseCtx); 
-
+  // const expenseCtx = useContext(ExpenseCtx);
+  const dispatch = useDispatch();
   const goBack = () => navigation.goBack();
 
   const onConfirm = () => {
@@ -18,24 +20,27 @@ function ManageExpenses({ route, navigation }) {
       const updatableVal = {
         description: 'Updated Value',
         amount: 200,
-        date: new Date(),
+        date: new Date().toISOString(),
       };
 
-      expenseCtx.updateExpense(expenseId, updatableVal);
+      // expenseCtx.updateExpense(expenseId, updatableVal);
+      dispatch(updateExpense({ id: expenseId, data: updatableVal }));
     } else {
       const newVal = {
         description: 'New Value',
         amount: 200,
-        date: new Date(),
+        date: new Date().toISOString(),
       };
 
-      expenseCtx.addExpense(newVal);
+      // expenseCtx.addExpense(newVal);
+      dispatch(addExpense({data: newVal}));
     }
     goBack();
   };
 
   const onDelete = () => {
-    expenseCtx.deleteExpense(expenseId);
+    // expenseCtx.deleteExpense(expenseId);
+    dispatch(deleteExpense({ id: expenseId }));
     goBack();
   };
   

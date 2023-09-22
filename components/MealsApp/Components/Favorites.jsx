@@ -5,7 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 
 function Favorites() {
-    const { favIds } = useSelector((state) => state.mealsAppFavoritesSlice);
+    const { favIds } = useSelector((state) => state.mealsFavorites);
     const favMeals = MEALS.filter(({ id }) => favIds.includes(id));
   return (
     <View>

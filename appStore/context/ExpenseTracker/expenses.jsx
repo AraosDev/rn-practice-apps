@@ -5,79 +5,79 @@ export const dummyExpenses = [
         id: 'e1',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e2',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e3',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e4',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e5',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e6',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e7',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e8',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e9',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e10',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e11',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e12',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
     {
         id: 'e13',
         amount: 100,
         description: 'Cups',
-        date: new Date('1997-11-13')
+        date: new Date('1997-11-13').toISOString()
     },
 ];
 

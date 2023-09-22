@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const mealsAppFavoritesSlice = createSlice({
-    name: 'favorites',
+    name: 'mealsAppFavoritesSlice',
     initialState,
     reducers: {
         addFavorite(state, action) {
@@ -16,8 +16,8 @@ const mealsAppFavoritesSlice = createSlice({
                 state.favIds.findIndex((id) => action.payload.id === id),
                 1
             );
-        }
-    }
+        },
+    },
 });
 
 export const { addFavorite, removeFavorite } = mealsAppFavoritesSlice.actions;
