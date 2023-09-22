@@ -19,7 +19,7 @@ function ExpenseScreen() {
         tabBarActiveTintColor: colors.accent500,
         tabBarLabelStyle: { marginBottom: 6 },
         headerRight: ({ tintColor }) => <IconButton color={tintColor} icon='add' onPress={() => navigation.navigate('ManageExpenses')} />,
-        headerRightContainerStyle: { padding: 8 }
+        headerRightContainerStyle: { padding: 8 },
     })}>
         <BottomTab.Screen component={AllExpenses} name='AllExpenses' options={({ navigation }) => ({
             tabBarIcon: ({ color, size }) => <IconButton icon='calendar' size={size} color={color} onPress={() => navigation.navigate('AllExpenses')} />,
@@ -35,9 +35,9 @@ function ExpenseScreen() {
 
 function ExpenseTracker() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: colors.primary500 } }}>
             <Stack.Screen component={ExpenseScreen} name='ExpenseScreen' options={{ headerShown: false }} />
-            <Stack.Screen component={ManageExpenses} name='ManageExpenses' />
+            <Stack.Screen component={ManageExpenses} name='ManageExpenses' options={{ presentation: 'modal' }} />
         </Stack.Navigator>
     )
 }

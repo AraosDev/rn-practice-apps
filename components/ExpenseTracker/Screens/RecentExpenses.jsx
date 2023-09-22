@@ -1,13 +1,14 @@
 import { View, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { colors } from '../../Globals/Styles/colors';
-import { dummyExpenses } from './AllExpenses';
 import ExpenseOutput from '../components/ExpenseOutput';
+import { ExpenseCtx } from '../../../appStore/context/ExpenseTracker/expenses';
 
 function RecentExpenses() {
+    const { expenses } = useContext(ExpenseCtx);
     return (
         <View style={styles.rootScreen}>
-            <ExpenseOutput expenses={dummyExpenses} period='Last 7 days' />
+            <ExpenseOutput expenses={expenses} period='Last 7 days' />
         </View>
     );
 }

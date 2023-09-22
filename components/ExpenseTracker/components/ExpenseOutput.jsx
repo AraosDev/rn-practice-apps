@@ -4,10 +4,17 @@ import { colors } from '../../Globals/Styles/colors';
 import { dateFormatter } from '../../Globals/utils/date';
 import { useNavigation } from '@react-navigation/native';
 
-function ExpenseItem ({ description, amount, date }) {
+function ExpenseItem ({ id, description, amount, date }) {
     const navigation = useNavigation();
+
+    const navigateToUpdateScreen = () => {
+        navigation.navigate(
+            'ManageExpenses',
+            { expenseId: id }
+        );
+    };
     return (
-        <Pressable style={({ pressed }) => pressed && { opacity: 0.7 }} onPress={() => navigation.navigate('ManageExpenses')}>
+        <Pressable style={({ pressed }) => pressed && { opacity: 0.7 }} onPress={navigateToUpdateScreen}>
             <View style={styles.expenseItemContainer}>
                 <View>
                     <Text style={styles.expenseItemDescription}>{description}</Text>
@@ -44,7 +51,8 @@ export default ExpenseOutput;
 
 const styles = StyleSheet.create({
     rootScreen: {
-        flex: 1
+        flex: 1,
+        marginBottom: 50,
     },
     summaryContainer: {
         flexDirection: 'row',
