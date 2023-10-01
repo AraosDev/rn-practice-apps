@@ -3,13 +3,21 @@ import React from 'react'
 import { TextInput } from 'react-native-gesture-handler';
 import { colors } from '../../Globals/Styles/colors';
 
-function Input({ label = '', textInputConfig = {} }) {
+function Input({ label = '', textInputConfig = {}, isInvalid = false }) {
     const { multiLine } = textInputConfig;
+
+    const inputStyles = [styles.input];
+
+    if (multiLine) inputStyles.push(styles.multiLineInput);
+    if (isInvalid) inputStyles.push(styles.invalidInput);
 
     return (
         <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>{label}</Text>
-            <TextInput style={[styles.input, multiLine && styles.multiLineInput]} {...textInputConfig} />
+            <Text style={[styles.inputLabel, isInvalid && styles.invalidLabel]}>{label}</Text>
+            <TextInput
+                style={inputStyles}
+                {...textInputConfig}
+            />
         </View>
     );
 }
@@ -37,5 +45,11 @@ const styles = StyleSheet.create({
     multiLineInput: {
         minHeight: 100,
         textAlignVertical: 'top',
+    },
+    invalidLabel: {
+        color: colors.error500,
+    },
+    invalidInput: {
+        backgroundColor: colors.error500,
     }
 });

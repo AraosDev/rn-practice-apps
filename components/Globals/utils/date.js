@@ -10,4 +10,4 @@ export const dateFormatter = (dateString) => {
 export const isDateWithin7Days = (date) => {
     const givenDate = new Date(date);
     return givenDate <= new Date() && givenDate >= (new Date(Date.now() - (7 * 24 * 60 * 60 * 1000)));
-}
+};

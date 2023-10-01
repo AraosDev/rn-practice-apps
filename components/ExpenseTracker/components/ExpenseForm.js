@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import React, { useState } from 'react'
 import Input from './Input';
 import Button from '../../Globals/components/Button';
@@ -26,23 +26,42 @@ function ExpenseForm({ defaults = {}, onSubmit, onCancel, submitLabel }) {
             description: description.value
         };
 
+        const isAmountValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
+        const isDateValid = new Date(expenseData.date).toString() !== 'Invalid Date';
+        const isDescriptionValid = expenseData.description.trim().length > 0;
+
+        if (!isAmountValid || !isDateValid || !isDescriptionValid) {
+            setInputs((currenInputs) => ({
+                amount: { value: currenInputs.amount.value, isValid: isAmountValid },
+                description: { value: currenInputs.description.value, isValid: isDescriptionValid },
+                date: { value: currenInputs.date.value, isValid: isDateValid },
+            }));
+            return;
+        }
+
         onSubmit(expenseData);
     }
+
+    const isInputInValid = !inputs.amount.isValid || !inputs.date.isValid || !inputs.description.isValid;
 
     return (
         <View>
             <Input
                 label='Amount'
                 textInputConfig={{ keyboardType: 'decimal-pad', value: inputs.amount.value, onChangeText: inputChangeHandler.bind(this, 'amount') }}
+                isInvalid={!inputs.amount.isValid}
             />
             <Input
                 label='Date'
                 textInputConfig={{ placeholder: 'YYYY-MM-DD', maxLength: 10, value: inputs.date.value, onChangeText: inputChangeHandler.bind(this, 'date') }}
+                isInvalid={!inputs.date.isValid}
             />
             <Input
                 label='Description'
                 textInputConfig={{ multiLine: true, value: inputs.description.value, onChangeText: inputChangeHandler.bind(this, 'description') }}
+                isInvalid={!inputs.description.isValid}
             />
+            {isInputInValid && <Text style={styles.invalidText}>Please type in correct value !</Text>}
             <View style={styles.actionBtnContainer}>
                 <Button style={{ backgroundColor: 'transparent' }} onPress={onCancel}>Cancel</Button>
                 <Button onPress={onSubmitHandler}>{submitLabel}</Button>
@@ -62,4 +81,10 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.primary100,
         borderBottomWidth: 4
     },
+    invalidText: {
+        color: colors.error500,
+        fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 8
+    }
 })
