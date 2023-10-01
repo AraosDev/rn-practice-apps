@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dummyExpenses } from "../../context/ExpenseTracker/expenses";
 
 const initialState = {
-    expenses: dummyExpenses,
+    expenses: [],
 };
 
 export const expenseTrackerManageExpenseSlice = createSlice({
