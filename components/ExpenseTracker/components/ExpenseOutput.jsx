@@ -4,7 +4,7 @@ import { colors } from '../../Globals/Styles/colors';
 import { dateFormatter } from '../../Globals/utils/date';
 import { useNavigation } from '@react-navigation/native';
 
-function ExpenseItem ({ id, description, amount, date }) {
+function ExpenseItem({ id, description, amount, date }) {
     const navigation = useNavigation();
 
     const navigateToUpdateScreen = () => {
@@ -21,7 +21,7 @@ function ExpenseItem ({ id, description, amount, date }) {
                     <Text style={styles.expenseItemDate}>{dateFormatter(date)}</Text>
                 </View>
                 <View style={styles.expenseItemAmountContainer}>
-                    <Text style={styles.expenseItemAmountText}>{amount}</Text>
+                    <Text style={styles.expenseItemAmountText}>{Number(amount).toFixed(2).toString()}</Text>
                 </View>
             </View>
         </Pressable>
@@ -29,7 +29,7 @@ function ExpenseItem ({ id, description, amount, date }) {
 }
 
 function ExpenseOutput({ period, expenses = [] }) {
-    const expensesSum = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const expensesSum = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
     return (
         <View style={styles.rootScreen}>
             <View style={styles.summaryContainer}>

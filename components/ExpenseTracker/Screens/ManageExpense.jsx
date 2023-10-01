@@ -4,8 +4,9 @@ import { colors } from '../../Globals/Styles/colors';
 import Button from '../../Globals/components/Button';
 // import { ExpenseCtx } from '../../../appStore/context/ExpenseTracker/expenses';
 import IconButton from '../../Globals/components/IconButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addExpense, deleteExpense, updateExpense } from '../../../appStore/redux/ExpenseTracker/expenses';
+import ExpenseForm from '../components/ExpenseForm';
 
 function ManageExpenses({ route, navigation }) {
   const { expenseId } = route.params || {};
@@ -13,27 +14,16 @@ function ManageExpenses({ route, navigation }) {
 
   // const expenseCtx = useContext(ExpenseCtx);
   const dispatch = useDispatch();
+  const { expenses } = useSelector((state) => state.expenses);
   const goBack = () => navigation.goBack();
 
-  const onConfirm = () => {
+  const onConfirm = (expenseData) => {
     if (isUpdateScreen) {
-      const updatableVal = {
-        description: 'Updated Value',
-        amount: 200,
-        date: new Date().toISOString(),
-      };
-
-      // expenseCtx.updateExpense(expenseId, updatableVal);
-      dispatch(updateExpense({ id: expenseId, data: updatableVal }));
+      // expenseCtx.updateExpense(expenseId, expenseData);
+      dispatch(updateExpense({ id: expenseId, data: expenseData }));
     } else {
-      const newVal = {
-        description: 'New Value',
-        amount: 200,
-        date: new Date().toISOString(),
-      };
-
-      // expenseCtx.addExpense(newVal);
-      dispatch(addExpense({data: newVal}));
+      // expenseCtx.addExpense(expenseData);
+      dispatch(addExpense({ data: expenseData }));
     }
     goBack();
   };
@@ -43,13 +33,17 @@ function ManageExpenses({ route, navigation }) {
     dispatch(deleteExpense({ id: expenseId }));
     goBack();
   };
-  
+
+  const currentExpense = expenses.find(({ id }) => id === expenseId);
+
   return (
     <View style={styles.rootScreen}>
-      <View style={styles.actionBtnContainer}>
-        <Button style={{ backgroundColor: 'transparent' }} onPress={goBack}>Cancel</Button>
-        <Button onPress={onConfirm}>{isUpdateScreen ? 'Update' : 'Add'}</Button>
-      </View>
+      <ExpenseForm
+        defaults={currentExpense}
+        onCancel={goBack}
+        onSubmit={onConfirm}
+        submitLabel={isUpdateScreen ? 'Update' : 'Add'}
+      />
       <View style={styles.deleteBtnContainer}>
         <IconButton icon='trash' color={colors.error500} size={30} onPress={onDelete} />
       </View>
@@ -64,14 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary200,
     padding: 24,
-  },
-  actionBtnContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: 16,
-    borderBottomColor: colors.primary100,
-    borderBottomWidth: 4
   },
   deleteBtnContainer: {
     marginVertical: 16,

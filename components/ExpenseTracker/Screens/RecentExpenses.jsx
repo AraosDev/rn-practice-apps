@@ -4,13 +4,17 @@ import { colors } from '../../Globals/Styles/colors';
 import ExpenseOutput from '../components/ExpenseOutput';
 // import { ExpenseCtx } from '../../../appStore/context/ExpenseTracker/expenses';
 import { useSelector } from 'react-redux';
+import { isDateWithin7Days } from '../../Globals/utils/date';
 
 function RecentExpenses() {
     // const { expenses } = useContext(ExpenseCtx);
     const { expenses } = useSelector((state) => state.expenses);
+
+    const recentExpenses = expenses.filter(({ date }) => isDateWithin7Days(date));
+
     return (
         <View style={styles.rootScreen}>
-            <ExpenseOutput expenses={expenses} period='Last 7 days' />
+            <ExpenseOutput expenses={recentExpenses} period='Last 7 days' />
         </View>
     );
 }
