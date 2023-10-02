@@ -13,16 +13,19 @@ function AllExpenses() {
   // const { expenses } = useSelector((state) => state.expenses);
   const { isLoading, data: expenses, isError } = useGetExpensesQuery();
 
-  const errorMsg = expenses?.length === 0 || !expenses ? 'No Expenses to show' : 'Unknown Error Occurred';
+  const screenContent = () => {
+    const errorMsg = expenses?.length === 0 || !expenses ? 'No Expenses to show' : 'Unknown Error Occurred';
+    if (isLoading) return <Loader />;
+    else if (isError || !expenses || expenses?.length === 0)
+      return (
+        <ErrorOverlay message={errorMsg} showActionBtn={false} />
+      );
+    else if (expenses) return <ExpenseOutput expenses={expenses} period='All Expenditures' />;
+  };
 
-  const screenContent = isLoading
-    ? <Loader />
-    : isError || !expenses || expenses?.length === 0
-      ? <ErrorOverlay message={errorMsg} showActionBtn={false} />
-      : <ExpenseOutput expenses={expenses} period='All Expenditures' />;
   return (
     <View style={styles.rootScreen}>
-      {screenContent}
+      {screenContent()}
     </View>
   );
 }

@@ -14,18 +14,20 @@ function RecentExpenses() {
     // const { expenses } = useSelector((state) => state.expenses);
     const { isLoading, data: expenses, isError } = useGetExpensesQuery();
 
-    const errorMsg = expenses?.length === 0 || !expenses ? 'No Expenses to show' : 'Unknown Error Occurred';
-    const recentExpenses = expenses?.filter(({ date }) => isDateWithin7Days(date));
-
-    const screenContent = isLoading
-        ? <Loader />
-        : isError || !expenses || expenses?.length
-            ? <ErrorOverlay message={errorMsg} showActionBtn={false} />
-            : <ExpenseOutput expenses={recentExpenses} period='Last 7 days' />
+    const screenContent = () => {
+        const errorMsg = expenses?.length === 0 || !expenses ? 'No Expenses to show' : 'Unknown Error Occurred';
+        const recentExpenses = expenses?.filter(({ date }) => isDateWithin7Days(date));
+        if (isLoading) return <Loader />;
+        else if (isError || !expenses || expenses?.length === 0)
+            return (
+                <ErrorOverlay message={errorMsg} showActionBtn={false} />
+            );
+        else if (expenses) return <ExpenseOutput expenses={recentExpenses} period='All Expenditures' />;
+    };
 
     return (
         <View style={styles.rootScreen}>
-            {screenContent}
+            {screenContent()}
         </View>
     );
 }
