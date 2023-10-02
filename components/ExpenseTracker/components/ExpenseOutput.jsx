@@ -29,7 +29,7 @@ function ExpenseItem({ id, description, amount, date }) {
 }
 
 function ExpenseOutput({ period, expenses = [] }) {
-    const expensesSum = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
+    const expensesSum = expenses?.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
     return (
         <View style={styles.rootScreen}>
             <View style={styles.summaryContainer}>
