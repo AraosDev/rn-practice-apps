@@ -10,9 +10,15 @@ import ExpenseTracker from './components/ExpenseTracker';
 import { store } from './appStore/redux/store';
 import { Provider } from 'react-redux';
 import { ExpenseProvider } from './appStore/context/ExpenseTracker/expenses';
-const Drawer = createDrawerNavigator();
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from './components/Authentication/Login';
+import SignUp from './components/Authentication/SignUp';
+import { colors } from './components/Globals/Styles/colors';
 
-function RNPractiseApps() {
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+
+function AuthenticatedNavigators() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name='mealsApp' component={MealsApp} options={{ headerShown: false, title: 'Meals App' }} />
@@ -23,18 +29,34 @@ function RNPractiseApps() {
   );
 }
 
+function NonAuthenticatedNavigators() {
+  return (
+    <Stack.Navigator screenOptions={{ contentStyle: styles.nonAuthContent, headerStyle: styles.nonAuthHeader }}>
+      <Stack.Screen name='login' component={Login} options={{ title: 'Login' }} />
+      <Stack.Screen name='signUp' component={SignUp} options={{ title: 'Sign Up' }} />
+    </Stack.Navigator>
+  );
+}
+
+function RootAppComp() {
+  return (
+    <NavigationContainer>
+      {/* <AuthenticatedNavigators /> */}
+      <NonAuthenticatedNavigators />
+    </NavigationContainer>
+  );
+}
+
 export default function App() {
   return (
     <>
       <StatusBar style='auto' />
       <View style={styles.container}>
-      <Provider store={store}>
-        <ExpenseProvider>
-          <NavigationContainer>
-            <RNPractiseApps />
-          </NavigationContainer>
-        </ExpenseProvider>
-      </Provider>
+        <Provider store={store}>
+          <ExpenseProvider>
+            <RootAppComp />
+          </ExpenseProvider>
+        </Provider>
       </View>
     </>
   );
@@ -45,5 +67,11 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingTop: 50,
     // paddingHorizontal: 16,
+  },
+  nonAuthContent: {
+    backgroundColor: colors.primary50,
+  },
+  nonAuthHeader: {
+    backgroundColor: colors.primary100
   }
 });
