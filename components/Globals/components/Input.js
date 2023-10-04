@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import { TextInput } from 'react-native-gesture-handler';
-import { colors } from '../../Globals/Styles/colors';
+import { TextInput } from 'react-native';
+import { colors } from '../Styles/colors';
 
 function Input({ label = '', textInputConfig = {}, isInvalid = false }) {
     const { multiLine } = textInputConfig;
