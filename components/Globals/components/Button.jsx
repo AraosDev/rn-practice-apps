@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Button({ children, onPress, style = {}, rippleColor = '' }) {
   return (
-    <Pressable 
+    <Pressable
       style={[styles.buttonContainer, style]}
       android_ripple={{ color: rippleColor || '#d4b6df' }}
       onPress={onPress}

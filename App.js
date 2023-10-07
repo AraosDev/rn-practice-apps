@@ -19,6 +19,7 @@ import { logout, setToken } from './appStore/redux/UserAuth/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import React, { useEffect, useState } from 'react';
+import FavoritePlaces from './components/FavoritePlaces';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -46,10 +47,11 @@ function AuthenticatedDrawer(props) {
 function AuthenticatedNavigators() {
   return (
     <Drawer.Navigator drawerContent={(props) => <AuthenticatedDrawer {...props} />}>
-      <Drawer.Screen name='mealsApp' component={MealsApp} options={{ headerShown: false, title: 'Meals App' }} />
       <Drawer.Screen name='goalsManager' component={GoalsManager} options={{ title: 'Goals Manager' }} />
       <Drawer.Screen name='guessNumberGame' component={GuessNumberGame} options={{ title: 'Guess Number Game' }} />
+      <Drawer.Screen name='mealsApp' component={MealsApp} options={{ headerShown: false, title: 'Meals App' }} />
       <Drawer.Screen name='expenseTracker' component={ExpenseTracker} options={{ title: 'Expense Tracker', headerShown: false }} />
+      <Drawer.Screen name='favoritePlaces' component={FavoritePlaces} options={{ title: 'Favorite Places', headerShown: false }} />
     </Drawer.Navigator>
   );
 }
