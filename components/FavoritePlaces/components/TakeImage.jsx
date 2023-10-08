@@ -12,25 +12,29 @@ function TakeImage() {
     const [pickedImageUri, setPickedImageUri] = useState(null);
 
     async function verifyCameraPermission() {
-        const response = await requireCamPermission();
-        return response.granted;
+        if (camPermissionStatus.status === PermissionStatus.UNDETERMINED) {
+            const response = await requireCamPermission();
+            return response.granted;
+        } else if (camPermissionStatus.status === PermissionStatus.DENIED) {
+            Alert.alert('No camera permission granted', 'Please give camera permissions to use this feature');
+            return false;
+        }
+
+        return true;
     }
 
     async function openCamHandler() {
-        if (PermissionStatus.UNDETERMINED) {
-            if (!(await verifyCameraPermission())) {
-                Alert.alert('Denied Permission', 'You cannot add place if camera permission is denied');
-                return;
-            }
+        if (!(await verifyCameraPermission())) {
+            return;
+        }
 
-            const pickedImage = await launchCameraAsync({
-                allowsEditing: true,
-                aspect: [16, 9],
-                quality: 0.4
-            });
+        const pickedImage = await launchCameraAsync({
+            allowsEditing: true,
+            aspect: [16, 9],
+            quality: 0.4
+        });
 
-            setPickedImageUri(pickedImage.assets[0].uri);
-        };
+        setPickedImageUri(pickedImage.assets[0].uri);
 
     }
 
