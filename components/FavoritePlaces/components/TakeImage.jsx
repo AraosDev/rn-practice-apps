@@ -2,10 +2,10 @@ import { View, Text, StyleSheet, Alert, Image } from 'react-native'
 import React, { useState } from 'react'
 import Button from '../../Globals/components/Button';
 import { colors } from '../../Globals/Styles/colors';
-import { useCameraPermissions, PermissionStatus, launchCameraAsync } from 'expo-image-picker';
+import { useCameraPermissions, PermissionStatus, launchCameraAsync, launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 
 function TakeImage() {
-    const { cameraContainer, cameraPreviewContainer, cameraButton } = styles;
+    const { cameraContainer, cameraPreviewContainer, cameraButton, camActionBtns } = styles;
 
     const [camPermissionStatus, requireCamPermission] = useCameraPermissions();
 
@@ -24,18 +24,37 @@ function TakeImage() {
     }
 
     async function openCamHandler() {
-        if (!(await verifyCameraPermission())) {
-            return;
+        try {
+            if (!(await verifyCameraPermission())) {
+                return;
+            }
+
+            const pickedImage = await launchCameraAsync({
+                allowsEditing: true,
+                aspect: [16, 9],
+                quality: 0.4
+            });
+
+            setPickedImageUri(pickedImage.assets[0].uri);
+        } catch (e) {
+            console.log(e);
         }
 
-        const pickedImage = await launchCameraAsync({
-            allowsEditing: true,
-            aspect: [16, 9],
-            quality: 0.4
-        });
+    }
 
-        setPickedImageUri(pickedImage.assets[0].uri);
+    async function openImageLibrary() {
+        try {
+            const pickedImage = await launchImageLibraryAsync({
+                mediaTypes: MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [16, 9],
+                quality: 0.4,
+            });
 
+            setPickedImageUri(pickedImage.assets[0].uri);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     let previewFallback = <Text style={styles.imageFallback}>Please Select an image</Text>
@@ -44,7 +63,10 @@ function TakeImage() {
     return (
         <View style={cameraContainer}>
             <View style={cameraPreviewContainer}>{previewFallback}</View>
-            <Button style={cameraButton} onPress={openCamHandler}>Take Image</Button>
+            <View style={camActionBtns}>
+                <Button style={cameraButton} onPress={openCamHandler}>Take Image</Button>
+                <Button style={cameraButton} onPress={openImageLibrary}>Pick Image</Button>
+            </View>
         </View>
     );
 }
@@ -77,9 +99,14 @@ export const styles = StyleSheet.create({
         color: 'white',
     },
     cameraButton: {
-        flex: 1,
-        width: '100%',
+        maxWidth: '45%',
         margin: 0,
-        marginVertical: 10,
+    },
+    camActionBtns: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10,
     }
 });
