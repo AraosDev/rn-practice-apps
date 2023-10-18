@@ -1,20 +1,24 @@
 import { View, Text, StyleSheet, Alert, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Button from '../../Globals/components/Button';
 import { colors } from '../../Globals/Styles/colors';
 import { useForegroundPermissions, PermissionStatus, getCurrentPositionAsync, getLastKnownPositionAsync } from 'expo-location';
 import { getMapPreview } from '../../Globals/utils/location';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPlaceProps } from '../../../appStore/redux/FavoritePlaces/favoritePlaces';
 
 export default function MapPreview() {
-    const [currentLocation, setCurrentLocation] = useState();
+    const { latitude, longitude } = useSelector((state) => state.favoritePlaces);
     const [locationPermisionInfo, requestLocationPermission] = useForegroundPermissions();
     const navigation = useNavigation();
-    const route = useRoute()
+    const route = useRoute();
+    const dispatch = useDispatch();
     const { latitude: selectedLat, longitude: selectedLong } = route.params || {};
 
     useEffect(() => {
-        if (selectedLat && selectedLong) setCurrentLocation({ latitude: selectedLat, longitude: selectedLong });
+        if (selectedLat && selectedLong)
+            dispatch(setPlaceProps({ latitude: selectedLat, longitude: selectedLong }));
     }, [selectedLat, selectedLong])
 
     async function verifyLocationPermission() {
@@ -40,12 +44,12 @@ export default function MapPreview() {
 
     async function setCurrentGeoLocation() {
         const location = await getCurrentLocation();
-        setCurrentLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+        dispatch(setPlaceProps({ latitude: location.coords.latitude, longitude: location.coords.longitude }));
     }
 
     async function openMapView() {
         let currentLoc;
-        if (currentLocation) currentLoc = currentLocation;
+        if (latitude && longitude) currentLoc = { latitude, longitude };
         else {
             const location = await getCurrentLocation();
             currentLoc = { latitude: location.coords.latitude, longitude: location.coords.longitude }
@@ -54,7 +58,7 @@ export default function MapPreview() {
     }
 
     let mapPreview = <Text style={styles.mapImageFallback}>No Map Preview available</Text>;
-    if (currentLocation) mapPreview = <Image style={styles.mapImage} source={{ uri: getMapPreview(currentLocation) }} />
+    if (latitude && longitude) mapPreview = <Image style={styles.mapImage} source={{ uri: getMapPreview({ latitude, longitude }) }} />
     return (
         <View style={styles.mapContainer}>
             <View style={styles.mapPreviewContainer}>{mapPreview}</View>

@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import React, { useEffect, useState } from 'react';
 import FavoritePlaces from './components/FavoritePlaces';
+import { database } from './components/Globals/utils/database';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -70,6 +71,13 @@ function RootAppComp() {
   const { idToken } = useSelector((state) => state.userAuth.token);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isGettingToken, setGettingToken] = useState(true);
+  const [isDbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    database.init()
+      .then(() => setDbInitialized(true))
+      .catch(() => setDbInitialized(false));
+  }, []);
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -88,7 +96,7 @@ function RootAppComp() {
     fetchToken();
   }, [idToken]);
 
-  if (isGettingToken) return <AppLoading />;
+  if (isGettingToken && isDbInitialized) return <AppLoading />;
 
   return (
     <NavigationContainer>

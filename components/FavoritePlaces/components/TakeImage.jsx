@@ -1,15 +1,18 @@
 import { View, Text, StyleSheet, Alert, Image } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '../../Globals/components/Button';
 import { colors } from '../../Globals/Styles/colors';
 import { useCameraPermissions, PermissionStatus, launchCameraAsync, launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPlaceProps } from '../../../appStore/redux/FavoritePlaces/favoritePlaces';
 
 function TakeImage() {
     const { cameraContainer, cameraPreviewContainer, cameraButton, camActionBtns } = styles;
 
     const [camPermissionStatus, requireCamPermission] = useCameraPermissions();
+    const dispatch = useDispatch();
 
-    const [pickedImageUri, setPickedImageUri] = useState(null);
+    const { imageUrl } = useSelector((state) => state.favoritePlaces);
 
     async function verifyCameraPermission() {
         if (camPermissionStatus.status === PermissionStatus.UNDETERMINED) {
@@ -35,7 +38,7 @@ function TakeImage() {
                 quality: 0.4
             });
 
-            setPickedImageUri(pickedImage.assets[0].uri);
+            dispatch(setPlaceProps({ imageUrl: pickedImage.assets[0].uri }));
         } catch (e) {
             console.log(e);
         }
@@ -51,14 +54,14 @@ function TakeImage() {
                 quality: 0.4,
             });
 
-            setPickedImageUri(pickedImage.assets[0].uri);
+            dispatch(setPlaceProps({ imageUrl: pickedImage.assets[0].uri }));
         } catch (e) {
             console.log(e);
         }
     }
 
     let previewFallback = <Text style={styles.imageFallback}>Please Select an image</Text>
-    if (pickedImageUri) previewFallback = <Image style={styles.image} source={{ uri: pickedImageUri }} />
+    if (imageUrl) previewFallback = <Image style={styles.image} source={{ uri: imageUrl }} />
 
     return (
         <View style={cameraContainer}>
