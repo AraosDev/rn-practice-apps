@@ -6,11 +6,28 @@ import Map from './screens/Map';
 import { StyleSheet } from 'react-native';
 import { colors } from '../Globals/Styles/colors';
 import IconButton from '../Globals/components/IconButton';
+import { useEffect } from 'react';
+import { database } from '../Globals/utils/database';
+import { Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { setAddPlaces } from '../../appStore/redux/FavoritePlaces/favoritePlaces';
 
 const Stack = createNativeStackNavigator();
 
 function FavoritePlaces() {
     const { headerStyle, contentStyle } = styles;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        database.fetchPlaces()
+            .then((places) => {
+                console.log({ places });
+                dispatch(setAddPlaces(places));
+            })
+            .catch(() => {
+                Alert.alert('Error in fetching your places', 'Please try again.');
+            })
+    }, []);
 
     return (
         <Stack.Navigator screenOptions={{ headerStyle, contentStyle }}>
